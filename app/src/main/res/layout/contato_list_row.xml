@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/nomeId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Newton Junior"
@@ -24,16 +24,16 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/nomeId"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView4" />
+        android:id="@+id/emailId" />
 
     <TextView
-        android:id="@+id/telefone"
+        android:id="@+id/telefoneId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView4"
+        android:layout_above="@+id/emailId"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="11dp"
