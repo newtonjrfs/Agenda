@@ -4,15 +4,31 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.newton.agenda.adapter.ContatosAdapter;
 import com.newton.agenda.dao.ContatoDAO;
 import com.newton.agenda.model.Contato;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private List<Contato> contatoList = new ArrayList<Contato>();
+    private RecyclerView recyclerView;
+    private ContatosAdapter mAdapter;
+    private Contato contato;
+    private ContatoDAO contatoDAO;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +49,21 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        contatoDAO = new ContatoDAO(this);
+        contatoList = contatoDAO.buscarContato();
+        mAdapter = new ContatosAdapter(contatoList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+
     }
 
     @Override
