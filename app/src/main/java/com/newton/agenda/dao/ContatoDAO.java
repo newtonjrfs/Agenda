@@ -27,13 +27,14 @@ public class ContatoDAO {
         this.context = context;
     }
 
-    public void insere(Contato contato){
+    public long insere(Contato contato){
         dao = new BancoDAO(context);
         SQLiteDatabase db = dao.getWritableDatabase();
         ContentValues dados = pegaDadosDoContato(contato);
         long inserir = db.insert(BANCONOME,null,dados);
         db.close();
         Log.i(BANCONOME,inserir + " ");
+        return inserir;
     }
 
     public List<Contato> buscarContato(){

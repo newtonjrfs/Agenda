@@ -1,5 +1,6 @@
 package com.newton.agenda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.newton.agenda.dao.ContatoDAO;
+import com.newton.agenda.model.Contato;
 
 /**
  * Created by PAS12 on 20/03/2017.
@@ -26,6 +31,9 @@ public class ContatoActivity extends AppCompatActivity {
     private ProgressBar contato_progressBar;
 
     private String nome, email, telefone;
+
+    private Contato contato;
+    private ContatoDAO dao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +64,22 @@ public class ContatoActivity extends AppCompatActivity {
                     Snackbar.make(activity_contato,"Digite seu telefone",Snackbar.LENGTH_SHORT).show();
                     habilitarProgress(View.GONE,true);
                     return;
+                }
+
+                contato = new Contato();
+                contato.setNome(nome);
+                contato.setEmail(email);
+                contato.setTelefone(telefone);
+
+                dao = new ContatoDAO(getApplicationContext());
+                if(dao.insere(contato)>0){
+                    Toast.makeText(getApplicationContext(),"Salvo com sucesso ! ",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    finish();
+                }else
+                {
+                    Snackbar.make(activity_contato,"nao foi posssivel salvar",Snackbar.LENGTH_SHORT).show();
+                    habilitarProgress(View.GONE,true);
                 }
 
             }
