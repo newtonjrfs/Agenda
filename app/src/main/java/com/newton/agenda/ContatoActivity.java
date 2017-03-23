@@ -42,6 +42,17 @@ public class ContatoActivity extends AppCompatActivity {
 
         findView();
 
+        Intent intent = getIntent();
+        contato = (Contato) intent.getSerializableExtra("contato");
+        if(contato!=null){
+            contato_edtnome.setText(contato.getNome());
+            contato_edtemail.setText(contato.getEmail());
+            contato_edttelefone.setText(contato.getTelefone());
+        }else{
+            contato = new Contato();
+
+        }
+
         contato_BtnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +77,6 @@ public class ContatoActivity extends AppCompatActivity {
                     return;
                 }
 
-                contato = new Contato();
                 contato.setNome(nome);
                 contato.setEmail(email);
                 contato.setTelefone(telefone);

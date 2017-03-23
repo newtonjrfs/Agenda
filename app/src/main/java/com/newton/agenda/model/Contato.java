@@ -1,10 +1,12 @@
 package com.newton.agenda.model;
 
+import java.io.Serializable;
+
 /**
  * Created by PAS12 on 14/03/2017.
  */
 
-public class Contato {
+public class Contato implements Serializable{
 
     private long id;
     private String nome;

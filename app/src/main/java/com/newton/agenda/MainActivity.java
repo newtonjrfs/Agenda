@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.newton.agenda.adapter.ContatosAdapter;
 import com.newton.agenda.dao.ContatoDAO;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*Contato contato = new Contato("newton","newtoljunior@hotmail.com","94367767");
+        /*Contato contato = new Contato("gordim","matheus@hotmail.com","12587451");
         new ContatoDAO(this).insere(contato);*/
     }
 
@@ -63,7 +64,26 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
+                recyclerView,
+                new RecyclerTouchListener.ClickListener(){
+                   @Override
+                    public void onClick(View view,int position){
 
+                       Contato contato = contatoList.get(position);
+                       Intent intent = new Intent(getApplicationContext(),ContatoActivity.class);
+                       intent.putExtra("contato",contato);
+                       startActivity(intent);
+
+                   }
+                   @Override
+                    public void onLongClick(View view, int position){
+
+                       Contato contato = contatoList.get(position);
+                       Toast.makeText(getApplicationContext(),contato.getTelefone(),Toast.LENGTH_LONG).show();
+
+                   }
+                }));
     }
 
     @Override
