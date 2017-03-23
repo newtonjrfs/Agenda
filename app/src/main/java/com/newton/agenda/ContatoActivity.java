@@ -1,11 +1,18 @@
 package com.newton.agenda;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.newton.agenda.dao.BancoDAO;
 import com.newton.agenda.dao.ContatoDAO;
 import com.newton.agenda.model.Contato;
 
@@ -82,21 +90,39 @@ public class ContatoActivity extends AppCompatActivity {
                 contato.setTelefone(telefone);
 
                 dao = new ContatoDAO(getApplicationContext());
-                if(dao.insere(contato)>0){
-                    Toast.makeText(getApplicationContext(),"Salvo com sucesso ! ",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    finish();
-                }else
-                {
-                    Snackbar.make(activity_contato,"nao foi posssivel salvar",Snackbar.LENGTH_SHORT).show();
-                    habilitarProgress(View.GONE,true);
+                if(contato.getId()>0){
+                    editar();
+                }else{
+                    inserir();
                 }
+
 
             }
         });
 
 
 
+    }
+
+    private void editar() {
+
+        dao.alterar(contato);
+        Toast.makeText(getApplicationContext(),"Salvo com sucesso",Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+    }
+
+
+    private void inserir() {
+        if(dao.insere(contato)>0){
+            Toast.makeText(getApplicationContext(),"Salvo com sucesso ! ",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }else
+        {
+            Snackbar.make(activity_contato,"nao foi posssivel salvar",Snackbar.LENGTH_SHORT).show();
+            habilitarProgress(View.GONE,true);
+        }
     }
 
     private void habilitarProgress(int visible, boolean b) {
@@ -120,5 +146,30 @@ public class ContatoActivity extends AppCompatActivity {
         contato_BtnSalvar = (Button) findViewById(R.id.btnSalvar);
         activity_contato = (LinearLayout) findViewById(R.id.activityContato);
         contato_progressBar = (ProgressBar) findViewById(R.id.progressBar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_contato,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contato_ligar:
+                Intent chamada = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contato.getTelefone()));
+                if (ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)==
+                        PackageManager.PERMISSION_GRANTED){
+                    startActivity(chamada);
+                }
+                return true;
+            case R.id.contato_apagar:
+                Toast.makeText(getApplicationContext(),R.string.apagar,Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -61,6 +61,16 @@ public class ContatoDAO {
         return  contatos;
     }
 
+    public void alterar(Contato contato){
+
+        dao = new BancoDAO(context);
+        SQLiteDatabase db = dao.getWritableDatabase();
+        ContentValues dados = pegaDadosDoContato(contato);
+        String [] params = {String.valueOf(contato.getId())};
+        db.update("Contato",dados,"id=?",params);
+
+    }
+
     private ContentValues pegaDadosDoContato(Contato contato){
 
         ContentValues dados = new ContentValues();
