@@ -1,6 +1,7 @@
 package com.newton.agenda;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -150,9 +152,11 @@ public class ContatoActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (contato.getId()>0){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_contato,menu);
-        return true;
+        return true;}
+        return false;
     }
 
     @Override
@@ -166,7 +170,25 @@ public class ContatoActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.contato_apagar:
-                Toast.makeText(getApplicationContext(),R.string.apagar,Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.deseja_apagar)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dao = new ContatoDAO(getApplicationContext());
+                                dao.deletar(contato);
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }
+                        })
+                        .setNegativeButton(R.string.nao,null)
+                        .show();
+                return true;
+            case R.id.contato_email:
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{contato.getEmail()});
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email,R.string.enviar_email + ""));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -5,4 +5,11 @@
     <string name="ligar">Ligar</string>
     <string name="enviar_email">Enviar e-mail</string>
     <string name="apagar">Apagar</string>
+
+    <string name="deseja_apagar">Deseja Apagar ?</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+
+
+
 </resources>

@@ -71,6 +71,15 @@ public class ContatoDAO {
 
     }
 
+    public void deletar(Contato contato){
+        dao = new BancoDAO(context);
+        SQLiteDatabase db = dao.getWritableDatabase();
+        String whereClause = "id=?";
+        String[] whereArgs = new String []{String.valueOf(contato.getId())};
+        db.delete(BANCONOME,whereClause,whereArgs);
+        db.close();
+    }
+
     private ContentValues pegaDadosDoContato(Contato contato){
 
         ContentValues dados = new ContentValues();
