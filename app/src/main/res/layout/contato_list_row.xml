@@ -6,24 +6,28 @@
     <TextView
         android:id="@+id/nomeId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
+        android:fontFamily="serif"
+        android:padding="5dp"
         android:text="Newton Junior"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/emailId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nomeId"
         android:layout_marginLeft="15dp"
+        android:fontFamily="serif"
+        android:padding="5dp"
         android:text="newtoljunior@hotmail.com"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -31,13 +35,15 @@
 
     <TextView
         android:id="@+id/telefoneId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="38dp"
         android:layout_above="@+id/emailId"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
+        android:fontFamily="serif"
+        android:padding="10dp"
         android:text="94367767"
         android:textColor="@android:color/black" />
 
